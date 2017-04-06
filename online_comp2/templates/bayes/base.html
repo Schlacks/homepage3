@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <style media="screen">
+
+  .right{
+    position: relative;
+    top: -40px
+  }
+  .topright {
+    position: absolute;
+    top: 2800px;
+    right: 200px;
+    }
+  form{
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-bottom: 25px;
+    margin: 40px;
+    border: 2px solid black
+  }
+
+  img{
+    margin: 40px;
+    margin-bottom: 0px
+  }
+  h6{
+    margin-bottom: 40px;
+    margin-left:40px;
+  }
+  #label1 {
+    margin: 40px;
+  }
+  #field1 {
+    margin: 40px;
+  }
+  h1{
+    align-self: center;
+  }
+
+  h4 {
+      font-family: "Verdana", Times, sans-serif;
+      line-height: 1.8;
+  }
+  #linkforward{
+
+    text-align: right;
+
+  }
+  </style>
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'index' %}">Equinox</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="{% url 'index' %}">Home</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'basic_app:create_and_update' %}">Bayesian Updating
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'basic_app:intro' %}">Introduction</a></li>
+              <li><a href="{% url 'basic_app:create_and_update' %}">Create and Update</a></li>
+              <li><a href="{% url 'basic_app:predict' %}">Prediction</a></li>
+            </ul>
+          </li>
+
+          <li><a href=" {% url 'admin:index' %}">Admin</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+    <div class="container">
+      {% block body_block %}
+      <!-- Anything outside this block will be inherited -->
+      {% endblock %}
+    </div>
+  </body>
+</html>

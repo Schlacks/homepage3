@@ -1,0 +1,48 @@
+{%extends 'bayes/base.html'%}
+{%block body_block%}
+{% load staticfiles%}
+
+  <div class="jumbotron">
+
+
+    <h4>Now that we covered how to update beliefs correctly, we might wonder what is it all about? What is the increment we gain from doing so?
+    Often, predicting a range of possible outcomes and attaching a probability to it is of vital importance. Instead of a rather rigid yes/no decision as
+    in the frequentist framework, Bayes inference allows you to attach a probability to an outcome using all available data. For example, one may ask: what is the
+    probability to observe an outcome within a certain limit. To answer such a question we need to employ the predictive distribution.  </h4>
+
+    <img src={%static 'images/predict_dist.PNG'%} width=300>
+    <h6>Equation 7. Predictive Distribution of updating a Gaussian Belief</h6>
+    <h4> Equation 7 is is the predictive distribution. Its mean is the overall mean of all data points and its variance comprises the count of
+    all data points and the updated alpha and beta of the inversegamma distribution. In fact the mu/sigma combination is the mode of the inversegamma distribution.
+     With the aid of this distribution you will be exploring, how Bayesian updating can be used for answering specific predictive questions.
+    Below you can enter the lower and upper bound of the range of interest. Click on 'Predict' and the resulting predictive distribution appears
+    with the range of interest colorized. Also a computational solution will be presented attaching a probability to the range of interest. </h4>
+
+    <form method=post action="">
+       {% csrf_token %}
+    <table>
+    {% for field in form4 %}
+    <tr>
+    <td>{{ field.label }}</td>
+    <td id='field1'>{{ field }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <p><input type=submit name='button3' value='Predict' class="btn btn-default" default=1 ></p>
+    </form>
+
+    <p>
+    {% if predictresult != None %}
+    {% load static %}
+    <img src="{% get_static_prefix %}{{ predictresult }}" width=1000>
+    <h6>Figure 4. Predictive Distribution of the current belief</h6>
+    <br>
+    <br>
+    {{prob_statement}}
+    {% endif %}
+    </p>
+
+    <p>  <a href="{% url 'basic_app:create_and_update' %}"> Back to Updating</a> </p>
+
+  </div class="jumbotron">
+{%endblock%}

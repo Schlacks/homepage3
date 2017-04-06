@@ -1,0 +1,78 @@
+{%extends 'bayes/base.html'%}
+{%block body_block%}
+{% load staticfiles%}
+
+
+      <div class="jumbotron">
+        <br>
+        <br>
+        <h1><center><u>Bayesian Statistics</u></center></h1>
+        <br>
+        <br>
+        <h4>Bayes' Statistics is an analytical tool that is fundamentally different form frequentist statistics which is usually taught in the natural and social sciences.
+        The precise nature and definition of both analytical avenues are discussed elsewhere (<a href="https://www.youtube.com/watch?v=r76oDIvwETI">here</a> or
+         <a href="http://stats.stackexchange.com/questions/22/bayesian-and-frequentist-reasoning-in-plain-english">here</a>).
+    </h4><br><h4>What we want to focus on here instead is, how the integration process of new information into an exisiting belief takes place.
+      The basic principle of Bayes' Statistics includes a prior belief
+    and some sort of data that informs that belief resulting in a posterior belief. A classical example is your belief about the weather
+     tomorrow. The whole day there was rain. From that you conclude that it is rather likely it'll be raining
+    tomorrow as well, say you think there is a 70% chance of rain the next day. However, while you are in bed, you watch the weather forecast
+     for tomorrow. It reports, there will be no rain tomorrow. Integrating this piece of data
+    in your belief, you lower your expectation of rain to, say 10%. That is an everyday belief updating process as everyone knows and it is
+     Bayesian! However, a nifty feature of Bayesian Statistic is, that it easily extents to more complex settings than the binomial one.
+    Many a times one needs to estimate a size, a length, a weight, or any other continuous variable. In order to capture a belief along a
+    continuous variable, a distribution is deployed. The most common and most intuitive one is the normal distribution, which we will focus
+     on here. </h4>
+    <h4>The two parameters that define a normal distribution are the mean and the standard deviation. In the following we simulate how an
+       unknowing observer infers the correct mean and the correct standard deviation bit by bit, oberving instances from a predefined normal
+       distribution.
+      He (or she) does so in a perfect manner, by using the Bayesian update rules.
+    </h4>
+    <h4>In order to do so, we have to make an assumption and a random guess. This arbitrary and unscientific act is the main point of contention
+    while doing Bayes' Statistic. Thee, who objects shall <a href="https://www.youtube.com/watch?v=KrHP2hm7Wk8"> speak now </a> or forever hold his peace.  </h4>
+    <h4>The assumption we make, is that prior belief is normally distributed. We make this assumption out of computational convenience, because it
+    easens our computations significantly. (It is called <a href="https://en.wikipedia.org/wiki/Conjugate_prior"> conjugate prior </a> and most distributions have one)
+  The truly haphazard claim we will be doing, however, is to simply pick values for the two parameters that constitute his (or her) prior belief.
+Since, by definition, we have no information about the true population parameters, there is nothing we are left to do but to randomly guess the prior belief. (also from
+a computational perspective we hae to pick a prior belief, because you can't update a belief that doesn't exist.)
+ </h4>
+ <h4>So far,so good. The next step is to realize that not only the observations have distribution (the true population distribution) and the belief of the observer
+ has a distribution (the prior belief that is constantly updated by the incoming evidence). Not only they have a distribution, but also the parameters of the belief distribution. But the parameters of the belief distribution have a distribution
+  them selves. This is an important insight, because the updating algorithm operate at those 'distributions of distributions'. The parameters governing these higher level distributions
+   are aptly called hyper-parameters. (To avoid confusion, the parameters of the population distribution do no have a distribution. They are set.)
+</h4>
+<h4>The question arising now is: How are these parameters (mu an sigma) distributed? Well, the answer to this question contains an easy and a difficult part.
+The easy part is: mu is distributed with a normal distribution where the hyperparameter mu0 equals the mu of the actual belief distribution.
+The standard deviation, however is not normally distributed. The distribution of its square (the variance) is the <a href="https://en.wikipedia.org/wiki/Inverse-gamma_distribution">Inverse-gamma distribution</a>.</h4>
+
+<img src={%static 'images/Capture.PNG'%} alt="">
+<h6>Equation 1 and 2. From <a href="https://en.wikipedia.org/wiki/Normal_distribution#With_unknown_mean_and_unknown_variance">https://en.wikipedia.org/wiki/Normal_distribution#With_unknown_mean_and_unknown_variance</a></h6>
+
+<h4>Equation 1 and 2 describe that relationship in a mathematical notation. Equation 2 features the chi squared distribution and the inversegamma (IG) distribution.
+  Correctly reformed parameters results in them being quivalent, but we will work with the latter one. The two terms defining the IG distribution are the parameters alpha and beta.
+These two parameters, and mu and the count of observations are the 4 parameters for which updating algorithms exist, that we will explore here.  </h4>
+<h4>The first step is to pick values for the IG parameters. Out of convention, I will pick alpha = 1 and beta = 1. This results in an IG distribution displayed in Figure 1.</h4>
+<img src={%static 'images/IG.PNG'%} width=700>
+<h6>Figure 1. Inverse Gamma Distribution with alpha = 1 and beta = 1: IG(1,1)</h6>
+<h4>The resulting distribution for the mean mu of the prior belief is a bit harder to display. As one can see in equation 1, that normal distribution
+has standard deviation sigma. But sigma in itself has no defined value but is distributed as seen in Figure 1. Hence, the distribution of mu can
+only be displayed in combination with the distribution of sigma^2. This results in a 3 dimensional plot.</h4>
+<img src={%static 'images/NIG.PNG'%} width=700>
+<h6>Figure 2. Normal-Inverse Gamma Distribution with alpha = 1 and beta = 1 and mu0 = 0</h6>
+<h4>Figure 2 shows this plot. In the contour plot on the right one can recognize the IG distribution from Figure 1. On the contour plot on the back the normal distribution of mu is discernible.
+Observe, that with increasing sigma^2 the resulting normal distribution flatens out. This reflects the dependency of the spread of this distribution
+on the standard deviation. Mu0 was arbitrarily chosen to be 0.</h4>
+<h4>Figure 2 therefore shows the distribution of the parameters of the prior belief of the observer; a prior belief, that we arbitrarily picked.
+What happens, when there is the first observation? The prior belief will be updated and refined. This happens according to strict update rules, derived <a href="http://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf"> elsewhere
+ </a> and shown in Equations 3 to 6.
+</h4>
+<img src={%static 'images/update_rules.PNG'%} width=500>
+<h6>Equations 3 to 6. 'v' (pronounced nu) is the total count of observations and 'n' is the count of observations used during the update. </h6>
+<h4>In order to update, we first have to set up a prior belief, that we will be doing in the next window.</h4>
+<br>
+<br>
+<div style="text-align:right" class='right'>
+<p><a href="{% url 'basic_app:create_and_update' %}">Create a new distribution</a></p>
+</div>
+
+{%endblock%}

@@ -1,0 +1,59 @@
+{%extends 'bayes/base.html'%}
+{%block body_block%}
+{% load staticfiles%}
+
+  <div class="jumbotron">
+
+<h4>Now it is time to explore, what happens to the distribution of mu and sigma^2 with incoming observations.
+Below you find an input in which you can freely choose the mean (mu) and standard deviation (sigma) of the true population distribution. These parameters are unknown to
+the observer. Click 'Create' to set up a prior belief. As emphasized earlier the initial values mu and sigma are randomly chosen. The initial mu of the observers
+belief will be a sample chosen from the distribution provided by you. Alpha and Beta will be set to 1.
+Figure 3 shows the prior belief of the observer. </h4>
+
+
+    <form method=post action="">
+       {% csrf_token %}
+<table>
+  {% for field in form %}
+    <tr>
+    <td>{{ field.label }}</td>
+    <td>{{ field }}</td>
+    </tr>
+  {% endfor %}
+</table>
+<br>
+<p><input type=submit name='button1' value='Create' class="btn btn-default" ></form></p>
+
+<p>
+{% if result != None %}
+{% load static %}
+<img src="{% get_static_prefix %}{{ result }}" width=1000>
+<h6>Figure 3. Normal Inverse-Gamma Distribution of the belief's parameter.</h6>
+{% endif %}
+</p>
+{% if samples != None %}
+{{samples}}
+{% endif %}
+<h4>Great! The plot above shows the distribution of the parameters mu and sigma^2.
+Now go ahead and draw more samples. Below, enter the number of samples you wish to draw and push the 'Update' button. You will observe the higher the number of samples drawn, the closer the estimated parameters will move to the true parameters.
+That is Bayesian Updating in Action! Below the plot you can see (some of) the samples that were randomly drawn. </h4>
+
+<form method="post" class="">
+{{ form3}}
+{% csrf_token %}
+<br>
+<br>
+<p><input type=submit name='button2' value='Update' class="btn btn-default" default=1 ></p>
+</form>
+<p>  <a href="{% url 'basic_app:intro' %}"> Back to Intro</a> </p>
+
+
+
+        <div style="text-align:right" class='right'>
+          <p><a href="{% url 'basic_app:predict' %}">Predict Future Outcome</a></p>
+          <!-- more links here -->
+        </div>
+
+      </div class="jumbotron">
+
+{%endblock%}
