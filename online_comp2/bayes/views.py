@@ -9,7 +9,7 @@ import os
 
 
 def index(request):
-    #return render ( request, 'C:/Users/Jan/PycharmProjects/Newversion/untitled/online_comp/templates/bayes/index.html')
+    
     return render ( request, 'bayes/index.html')
 
 
